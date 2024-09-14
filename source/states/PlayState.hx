@@ -418,16 +418,10 @@ class PlayState extends MusicBeatState
 						#if LUA_ALLOWED
 						if(file.toLowerCase().endsWith('.lua'))
 							new FunkinLua(folder + file);
-						if(file.toLowerCase().endsWith('.chainsaw'))
-							new FunkinLua(folder + file);
-						if(file.toLowerCase().endsWith('.lscript'))
-							new FunkinLua(folder + file);
 						#end
 		
 						#if HSCRIPT_ALLOWED
 						if(file.toLowerCase().endsWith('.hx'))
-							initHScript(folder + file);
-						if(file.toLowerCase().endsWith('.chainsawhx'))
 							initHScript(folder + file);
 						if(file.toLowerCase().endsWith('.hscript'))
 							initHScript(folder + file);
@@ -442,13 +436,10 @@ class PlayState extends MusicBeatState
 				// STAGE SCRIPTS
 				#if LUA_ALLOWED
 				startLuasNamed('stages/' + curStage + '.lua');
-				startLuasNamed('stages/' + curStage + '.chainsaw');
-				startLuasNamed('stages/' + curStage + '.lscript');
 				#end
 		
 				#if HSCRIPT_ALLOWED
 				startHScriptsNamed('stages/' + curStage + '.hx');
-				startHScriptsNamed('stages/' + curStage + '.chainsawhx');
 				startHScriptsNamed('stages/' + curStage + '.hscript');
 				startHScriptsNamed('stages/' + curStage + '.hxs');
 				startHScriptsNamed('stages/' + curStage + '.hxc');
@@ -655,27 +646,21 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		for (notetype in noteTypes){
 			startLuasNamed('custom_notetypes/' + notetype + '.lua');
-			startLuasNamed('custom_notetypes/' + notetype + '.chainsaw');
-			startLuasNamed('custom_notetypes/' + notetype + '.lscript');
 		}
 		for (event in eventsPushed){
 			startLuasNamed('custom_events/' + event + '.lua');
-			startLuasNamed('custom_events/' + event + '.chainsaw');
-			startLuasNamed('custom_events/' + event + '.lscript');
 		}
 		#end
 
 		#if HSCRIPT_ALLOWED
 		for (notetype in noteTypes){
 			startHScriptsNamed('custom_notetypes/' + notetype + '.hx');
-		startHScriptsNamed('custom_notetypes/' + notetype + '.chainsawhx');
 		startHScriptsNamed('custom_notetypes/' + notetype + '.hscript');
 		startHScriptsNamed('custom_notetypes/' + notetype + '.hxs');
 		startHScriptsNamed('custom_notetypes/' + notetype + '.hxc');
 		}
 		for (event in eventsPushed){
 			startHScriptsNamed('custom_events/' + event + '.hx');
-		startHScriptsNamed('custom_events/' + event + '.chainsawhx');
 		startHScriptsNamed('custom_events/' + event + '.hscript');
 		startHScriptsNamed('custom_events/' + event + '.hxs');
 		startHScriptsNamed('custom_events/' + event + '.hxc');
@@ -698,16 +683,10 @@ class PlayState extends MusicBeatState
 				#if LUA_ALLOWED
 				if(file.toLowerCase().endsWith('.lua'))
 					new FunkinLua(folder + file);
-				if(file.toLowerCase().endsWith('.chainsaw'))
-					new FunkinLua(folder + file);
-				if(file.toLowerCase().endsWith('.lscript'))
-					new FunkinLua(folder + file);
 				#end
 
 				#if HSCRIPT_ALLOWED
 				if(file.toLowerCase().endsWith('.hx'))
-					initHScript(folder + file);
-				if(file.toLowerCase().endsWith('.chainsawhx'))
 					initHScript(folder + file);
 				if(file.toLowerCase().endsWith('.hscript'))
 					initHScript(folder + file);
@@ -890,11 +869,20 @@ class PlayState extends MusicBeatState
 		#if HSCRIPT_ALLOWED
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
+		var scriptFile2:String = 'characters/' + name + '.hxs';
+		var scriptFile3:String = 'characters/' + name + '.hxc';
+		var scriptFile4:String = 'characters/' + name + '.hscript';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(scriptFile);
+		var replacePath2:String = Paths.modFolders(scriptFile2);
+		var replacePath3:String = Paths.modFolders(scriptFile3);
+		var replacePath4:String = Paths.modFolders(scriptFile4);
 		if(FileSystem.exists(replacePath))
 		{
 			scriptFile = replacePath;
+			scriptFile2 = replacePath;
+			scriptFile3 = replacePath;
+			scriptFile4 = replacePath;
 			doPush = true;
 		}
 		else
@@ -902,6 +890,15 @@ class PlayState extends MusicBeatState
 		{
 			scriptFile = Paths.getSharedPath(scriptFile);
 			if(FileSystem.exists(scriptFile))
+				doPush = true;
+			scriptFile2 = Paths.getSharedPath(scriptFile2);
+			if(FileSystem.exists(scriptFile2))
+				doPush = true;
+			scriptFile3 = Paths.getSharedPath(scriptFile3);
+			if(FileSystem.exists(scriptFile3))
+				doPush = true;
+			scriptFile4 = Paths.getSharedPath(scriptFile4);
+			if(FileSystem.exists(scriptFile4))
 				doPush = true;
 		}
 
@@ -911,6 +908,21 @@ class PlayState extends MusicBeatState
 				doPush = false;
 
 			if(doPush) initHScript(scriptFile);
+
+			if(SScript.global.exists(scriptFile2))
+				doPush = false;
+
+			if(doPush) initHScript(scriptFile2);
+
+			if(SScript.global.exists(scriptFile3))
+				doPush = false;
+
+			if(doPush) initHScript(scriptFile3);
+
+			if(SScript.global.exists(scriptFile4))
+				doPush = false;
+
+			if(doPush) initHScript(scriptFile4);
 		}
 		#end
 	}
