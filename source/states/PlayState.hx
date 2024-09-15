@@ -282,8 +282,6 @@ class PlayState extends MusicBeatState
 		// for lua
 		instance = this;
 
-		new ModchartSystem();
-
 		PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed');
 
