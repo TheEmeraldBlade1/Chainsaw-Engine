@@ -86,11 +86,7 @@ class NoteSplash extends FlxSprite
 		if(PlayState.isPixelStage || !ClientPrefs.data.antialiasing) antialiasing = false;
 
 		_textureLoaded = texture;
-		if (ClientPrefs.data.splashSkin == 'Andromeda'){
-			offset.set(30, 20);
-		}else if (ClientPrefs.data.splashSkin == 'Forever'){
-			offset.set(-5, 5);
-		}else{
+		{
 			offset.set(10, 10);
 		}
 
