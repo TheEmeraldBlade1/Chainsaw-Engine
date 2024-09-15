@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
--->
-<TextureAtlas imagePath="menushit.png" width="2276" height="49">
-	<SubTexture name="awards1" x="956" y="0" width="183" height="49" frameX="-0" frameY="-0" frameWidth="183" frameHeight="49"/>
-	<SubTexture name="awards2" x="1139" y="0" width="183" height="49" frameX="-0" frameY="-0" frameWidth="183" frameHeight="49"/>
-	<SubTexture name="credits1" x="1678" y="0" width="173" height="49" frameX="-0" frameY="-0" frameWidth="173" frameHeight="49"/>
-	<SubTexture name="credits2" x="1851" y="0" width="173" height="49" frameX="-0" frameY="-0" frameWidth="173" frameHeight="49"/>
-	<SubTexture name="freeplay1" x="554" y="0" width="201" height="49" frameX="-0" frameY="-0" frameWidth="201" frameHeight="49"/>
-	<SubTexture name="freeplay2" x="755" y="0" width="201" height="49" frameX="-0" frameY="-0" frameWidth="201" frameHeight="49"/>
-	<SubTexture name="mods1" x="2024" y="0" width="126" height="49" frameX="-0" frameY="-0" frameWidth="126" frameHeight="49"/>
-	<SubTexture name="mods2" x="2150" y="0" width="126" height="49" frameX="-0" frameY="-0" frameWidth="126" frameHeight="49"/>
-	<SubTexture name="options1" x="1322" y="0" width="178" height="49" frameX="-0" frameY="-0" frameWidth="178" frameHeight="49"/>
-	<SubTexture name="options2" x="1500" y="0" width="178" height="49" frameX="-0" frameY="-0" frameWidth="178" frameHeight="49"/>
-	<SubTexture name="story_mode1" x="0" y="0" width="277" height="49" frameX="-0" frameY="-0" frameWidth="277" frameHeight="49"/>
-	<SubTexture name="story_mode2" x="277" y="0" width="277" height="49" frameX="-0" frameY="-0" frameWidth="277" frameHeight="49"/>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menushit.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="awards10000" x="0" y="0" width="183" height="49"/>
+	<SubTexture name="awards20000" x="183" y="0" width="183" height="49"/>
+	<SubTexture name="credits10000" x="0" y="49" width="173" height="49"/>
+	<SubTexture name="credits20000" x="173" y="49" width="173" height="49"/>
+	<SubTexture name="freeplay10000" x="0" y="98" width="201" height="49"/>
+	<SubTexture name="freeplay20000" x="201" y="98" width="201" height="49"/>
+	<SubTexture name="gameplay_changers10000" x="0" y="147" width="464" height="49"/>
+	<SubTexture name="gameplay_changers20000" x="0" y="196" width="464" height="49"/>
+	<SubTexture name="mods10000" x="0" y="245" width="126" height="49"/>
+	<SubTexture name="mods20000" x="126" y="245" width="126" height="49"/>
+	<SubTexture name="options10000" x="252" y="245" width="178" height="49"/>
+	<SubTexture name="options20000" x="0" y="294" width="178" height="49"/>
+	<SubTexture name="story_mode10000" x="178" y="294" width="277" height="49"/>
+	<SubTexture name="story_mode20000" x="0" y="343" width="277" height="49"/>
 </TextureAtlas>

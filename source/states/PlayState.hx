@@ -59,6 +59,7 @@ import psychlua.HScript;
 import tea.SScript;
 #end
 
+
 /**
  * This is where all the Gameplay stuff happens and is managed
  *
@@ -79,6 +80,8 @@ class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
+	
+	var mainFont:String = 'vcr.ttf';
 
 	public static var ratingStuff:Array<Dynamic> = [
 		['F', 0.2], // From 0% to 19%
@@ -279,6 +282,8 @@ class PlayState extends MusicBeatState
 		// for lua
 		instance = this;
 
+		new ModchartSystem();
+
 		PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed');
 
@@ -433,6 +438,7 @@ class PlayState extends MusicBeatState
 					}
 				#end
 		
+
 				// STAGE SCRIPTS
 				#if LUA_ALLOWED
 				startLuasNamed('stages/' + curStage + '.lua');
@@ -566,32 +572,45 @@ class PlayState extends MusicBeatState
 
 		if (ClientPrefs.data.uiType == 'Vanilla'){
 			scoreTxt = new FlxText(healthBar.x + healthBar.width - 190, healthBar.y + 30, 0, '', 20);
-			scoreTxt.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			scoreTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			scoreTxt.scrollFactor.set();
 			uiGroup.add(scoreTxt);
 			scoreTxt.visible = !ClientPrefs.data.hideHud;
 		}else if (ClientPrefs.data.uiType == 'Forever'){
 			scoreTxt = new FlxText(0,  healthBar.y + 30, FlxG.width, "", 20);
-			scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			scoreTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			scoreTxt.scrollFactor.set();
 			scoreTxt.borderSize = 1.25;
 			scoreTxt.visible = !ClientPrefs.data.hideHud;
 			uiGroup.add(scoreTxt);
+	}else if (ClientPrefs.data.uiType == 'Accuracy Mod'){
+		scoreTxt = new FlxText(healthBar.x + healthBar.width / 2 - 150, healthBar.y + 50, 0, "", 20);
+		scoreTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.visible = !ClientPrefs.data.hideHud;
+		uiGroup.add(scoreTxt);
+	}else if (ClientPrefs.data.uiType == 'Psych'){
+		scoreTxt = new FlxText(0, healthBar.y + 40, FlxG.width, "", 20);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.25;
+		scoreTxt.visible = !ClientPrefs.data.hideHud;
+		uiGroup.add(scoreTxt);
 	}else{
 			scoreTxt = new FlxText(healthBar.x - healthBar.width / 2, healthBar.y + 26, 0, "", 20);
 			if (ClientPrefs.data.downScroll)
 				scoreTxt.y = healthBar.y - 18;
-			scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+			scoreTxt.setFormat(Paths.font(mainFont), 20, FlxColor.WHITE, RIGHT);
 			scoreTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 			scoreTxt.scrollFactor.set();
 			uiGroup.add(scoreTxt);
 			scoreTxt.visible = !ClientPrefs.data.hideHud;
 		}
-		if (ClientPrefs.data.uiType != 'Vanilla' && ClientPrefs.data.uiType != 'Forever'){
+		if (ClientPrefs.data.uiType == 'Micd Up'){
 			missTxt = new FlxText(scoreTxt.x, scoreTxt.y - 26, 0, "", 20);
 			if (ClientPrefs.data.downScroll)
 				missTxt.y = scoreTxt.y + 26;
-			missTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+			missTxt.setFormat(Paths.font(mainFont), 20, FlxColor.WHITE, RIGHT);
 			missTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 			missTxt.scrollFactor.set();
 			uiGroup.add(missTxt);
@@ -600,7 +619,7 @@ class PlayState extends MusicBeatState
 			accuracyTxt = new FlxText(missTxt.x, missTxt.y - 26, 0, "", 20);
 			if (ClientPrefs.data.downScroll)
 				accuracyTxt.y = missTxt.y + 26;
-			accuracyTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+			accuracyTxt.setFormat(Paths.font(mainFont), 20, FlxColor.WHITE, RIGHT);
 			accuracyTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 			accuracyTxt.scrollFactor.set();
 			uiGroup.add(accuracyTxt);
@@ -610,7 +629,7 @@ class PlayState extends MusicBeatState
 			ratingTxt = new FlxText(accuracyTxt.x, accuracyTxt.y - 26, 0, "", 20);
 			if (ClientPrefs.data.downScroll)
 				ratingTxt.y = accuracyTxt.y + 26;
-			ratingTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+			ratingTxt.setFormat(Paths.font(mainFont), 20, FlxColor.WHITE, RIGHT);
 			ratingTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 			ratingTxt.scrollFactor.set();
 			uiGroup.add(ratingTxt);
@@ -619,7 +638,7 @@ class PlayState extends MusicBeatState
 			comboTxt = new FlxText(ratingTxt.x, ratingTxt.y - 26, 0, "", 20);
 			if (ClientPrefs.data.downScroll)
 				comboTxt.y = ratingTxt.y + 26;
-			comboTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+			comboTxt.setFormat(Paths.font(mainFont), 20, FlxColor.WHITE, RIGHT);
 			comboTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 			comboTxt.scrollFactor.set();
 			uiGroup.add(comboTxt);
@@ -788,8 +807,15 @@ class PlayState extends MusicBeatState
 	#end
 
 	public function reloadHealthBarColors() {
-		healthBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
+		callOnScripts('onReloadHealthBarColors');
+		if (ClientPrefs.data.uiType == 'Vanilla' || ClientPrefs.data.uiType == 'Accuracy Mod'){
+			healthBar.setColors(FlxColor.fromRGB(255, 0, 0),
+			FlxColor.fromRGB(76, 255, 0));
+		}else{
+			healthBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		}
+		callOnScripts('onReloadHealthBarColorsPost');
 	}
 
 	public function addCharacterToList(newCharacter:String, type:Int) {
@@ -1251,10 +1277,27 @@ class PlayState extends MusicBeatState
 			}
 			scoreTxt.text += " • Combo Breaks: " + songMisses;
 			scoreTxt.text += " • Rank: " + ratingName;
+		}else if (ClientPrefs.data.uiType == 'Accuracy Mod'){
+			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text += " | Misses: " + songMisses;
+			scoreTxt.text += " | Accuracy: ";
+			if (ratingName != '?'){
+				scoreTxt.text += CoolUtil.floorDecimal(ratingPercent * 100, 2) + '%';
+			}else{
+				scoreTxt.text += "0%";
+			}
+		}else if (ClientPrefs.data.uiType == 'Psych'){
+			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text += " | Misses: " + songMisses;
+			scoreTxt.text += " | Rating: ";
+			scoreTxt.text += ratingName;
+			if (ratingName != '?'){
+				scoreTxt.text += " (" + CoolUtil.floorDecimal(ratingPercent * 100, 2) + '%)';
+			}
 		}else{
 			scoreTxt.text = 'Score: ' + songScore;
 		}
-		if (ClientPrefs.data.uiType != 'Vanilla' && ClientPrefs.data.uiType != 'Forever'){
+		if (ClientPrefs.data.uiType == 'Micd Up'){
 			missTxt.text = 'Misses: ' + songMisses;
 			if (songMisses == 0 && ratingName != '?'){
 				missTxt.text += ' [$ratingFC]';

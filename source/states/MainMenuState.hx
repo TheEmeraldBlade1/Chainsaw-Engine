@@ -9,6 +9,7 @@ import options.OptionsState;
 import psychlua.*;
 import psychlua.LuaUtils;
 import psychlua.HScript;
+import substates.GameplayChangersSubstate;
 
 #if SScript
 import tea.SScript;
@@ -91,20 +92,20 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.updateHitbox();
 			menuItem.screenCenter(X);
-			switch (i)
+			switch (optionShit[i])
 			{
-				case 0:
+				case 'story_mode':
 					menuItem.setPosition(0, 0);
-					case 1:
-						menuItem.setPosition(0, 60);
-						case 2:
-							menuItem.setPosition(0, 120);
-							case 3:
-								menuItem.setPosition(0, 180);
-								case 4:
-									menuItem.setPosition(0, 240);
-									case 5:
-										menuItem.setPosition(0, 300);
+				case 'freeplay':
+					menuItem.setPosition(0, 60);
+				case 'mods':
+					menuItem.setPosition(0, 120);
+				case 'credits':
+					menuItem.setPosition(0, 180);
+				case 'options':
+					menuItem.setPosition(0, 240);
+				case 'awards':
+					menuItem.setPosition(0, 300);
 			}
 		}
 
@@ -164,9 +165,9 @@ class MainMenuState extends MusicBeatState
 			if (controls.ACCEPT)
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				if (optionShit[curSelected] == 'donate')
+				if (optionShit[curSelected] == 'gameplay_changers')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					openSubState(new GameplayChangersSubstate());
 				}
 				else
 				{
@@ -205,7 +206,7 @@ class MainMenuState extends MusicBeatState
 									PlayState.SONG.splashSkin = null;
 									PlayState.stageUI = 'normal';
 								}
-						}
+							}
 					});
 
 					for (i in 0...menuItems.members.length)

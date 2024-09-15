@@ -88,7 +88,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		"What should the ui display?",
 		'uiType',
 		'string',
-		['Micd Up', 'Vanilla', 'Forever']);
+		['Micd Up', 'Vanilla', 'Forever', 'Accuracy Mod', 'Psych']);
 	addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
@@ -100,12 +100,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
-			'bool');
-		addOption(option);
-
-		var option:Option = new Option('Score Text Zoom on Hit',
-			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
-			'scoreZoom',
 			'bool');
 		addOption(option);
 
