@@ -298,14 +298,14 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Options':
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
-					MusicBeatState.switchState(new OptionsState());
+					MusicBeatState.switchState(new options.OptionsMainState());
 					if(ClientPrefs.data.pauseMusic != 'None')
 					{
 						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)), pauseMusic.volume);
 						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
 						FlxG.sound.music.time = pauseMusic.time;
 					}
-					OptionsState.onPlayState = true;
+					options.OptionsMainState.onPlayState = true;
 				case "Exit to menu":
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;

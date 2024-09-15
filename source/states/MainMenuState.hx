@@ -10,6 +10,7 @@ import psychlua.*;
 import psychlua.LuaUtils;
 import psychlua.HScript;
 import substates.GameplayChangersSubstate;
+import flixel.ui.FlxButton;
 
 #if SScript
 import tea.SScript;
@@ -40,6 +41,8 @@ class MainMenuState extends MusicBeatState
 		Mods.pushGlobalMods();
 		#end
 		Mods.loadTopMod();
+
+		FlxG.mouse.visible = true;
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
@@ -75,6 +78,7 @@ class MainMenuState extends MusicBeatState
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
+	
 
 		for (i in 0...optionShit.length)
 		{
@@ -164,6 +168,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
+				FlxG.mouse.visible = false;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				if (optionShit[curSelected] == 'gameplay_changers')
 				{
@@ -198,8 +203,8 @@ class MainMenuState extends MusicBeatState
 							case 'credits':
 								MusicBeatState.switchState(new CreditsState());
 							case 'options':
-								MusicBeatState.switchState(new OptionsState());
-								OptionsState.onPlayState = false;
+								MusicBeatState.switchState(new options.OptionsMainState());
+								options.OptionsMainState.onPlayState = false;
 								if (PlayState.SONG != null)
 								{
 									PlayState.SONG.arrowSkin = null;
