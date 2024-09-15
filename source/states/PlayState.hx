@@ -1290,7 +1290,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.text += " | Rating: ";
 			scoreTxt.text += ratingName;
 			if (ratingName != '?'){
-				scoreTxt.text += " (" + CoolUtil.floorDecimal(ratingPercent * 100, 2) + '%)';
+				scoreTxt.text += " (" + CoolUtil.psychAccuracy(ratingPercent, 100) + '%)';
 			}
 		}else{
 			scoreTxt.text = 'Score: ' + songScore;

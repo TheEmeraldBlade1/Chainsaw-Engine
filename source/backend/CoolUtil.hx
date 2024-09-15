@@ -70,6 +70,11 @@ class CoolUtil
 		return newValue / tempMult;
 	}
 
+	public static function psychAccuracy(value:Float, valueMulti:Int):Float
+		{
+			return Math.floor(value * valueMulti);
+		}
+
 	inline public static function dominantColor(sprite:flixel.FlxSprite):Int
 	{
 		var countByColor:Map<Int, Int> = [];
