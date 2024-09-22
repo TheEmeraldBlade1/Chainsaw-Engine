@@ -13,6 +13,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
+	public static var isPause:Bool = false;
+
 	function getOptions()
 	{
 		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
@@ -150,6 +152,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (controls.BACK) {
 			close();
 			ClientPrefs.saveSettings();
+			if (isPause){states.PlayState.instance.saveChangersSettings();}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 

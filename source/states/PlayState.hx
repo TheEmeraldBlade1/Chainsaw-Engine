@@ -396,6 +396,7 @@ class PlayState extends MusicBeatState
 			case 'school': new states.stages.School(); //Week 6 - Senpai, Roses
 			case 'schoolEvil': new states.stages.SchoolEvil(); //Week 6 - Thorns
 			case 'tank': new states.stages.Tank(); //Week 7 - Ugh, Guns, Stress
+			case 'phillyStreets': new states.stages.PhillyStreets(); //Week 7 - Ugh, Guns, Stress
 		}
 
 		if(isPixelStage) {
@@ -1309,6 +1310,10 @@ class PlayState extends MusicBeatState
 			comboTxt.text =  'Combo: ' + combo;
 		}
 
+		if (ClientPrefs.data.uiType == 'Psych' && !miss){
+			doScoreBop();
+		}
+
 		callOnScripts('onUpdateScore', [miss]);
 	}
 
@@ -1700,6 +1705,24 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public function saveChangersSettings()
+	{
+		healthGain = ClientPrefs.getGameplaySetting('healthgain');
+		healthLoss = ClientPrefs.getGameplaySetting('healthloss');
+		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill');
+		practiceMode = ClientPrefs.getGameplaySetting('practice');
+		cpuControlled = ClientPrefs.getGameplaySetting('botplay');
+		switch(songSpeedType)
+		{
+			case "multiplicative":
+				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed');
+			case "constant":
+				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed');
+		}
+		botplayTxt.visible = cpuControlled;
+		substates.GameplayChangersSubstate.isPause = false;
+	}
+
 	public function openChangersMenu()
 		{
 			persistentUpdate = false;
@@ -1718,6 +1741,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 			}
+			substates.GameplayChangersSubstate.isPause = true;
 			openSubState(new substates.GameplayChangersSubstate());
 		}
 

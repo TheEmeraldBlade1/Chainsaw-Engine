@@ -1,0 +1,31 @@
+{
+	"storyName": "DUE DEBTS",
+	"hideFreeplay": false,
+	"weekBackground": "phillyStreets",
+	"weekBefore": "week7",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"pico",
+		""
+	],
+	"songs": [
+		[
+			"darnell",
+			"dar",
+			[
+				61,
+				59,
+				41
+			],
+			"DANELL"
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "week end 1"
+}

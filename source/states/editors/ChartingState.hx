@@ -95,6 +95,10 @@ class ChartingState extends MusicBeatState
 	public static var lastSection:Int = 0;
 	private static var lastSong:String = '';
 
+	var lilStage:FlxSprite;
+	var lilBf:FlxSprite;
+	var lilOpp:FlxSprite;
+
 	var bpmTxt:FlxText;
 
 	var camPos:FlxObject;
@@ -225,6 +229,37 @@ class ChartingState extends MusicBeatState
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
 		add(bg);
+
+		lilStage = new FlxSprite(32, 432).loadGraphic(Paths.image("editors/lilStage"));
+		lilStage.scrollFactor.set();
+		add(lilStage);
+
+		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image("editors/lilBf"), true, 300, 256);
+		lilBf.animation.add("idle", [0, 1], 12, true);
+		lilBf.animation.add("0", [3, 4, 5], 12, false);
+		lilBf.animation.add("1", [6, 7, 8], 12, false);
+		lilBf.animation.add("2", [9, 10, 11], 12, false);
+		lilBf.animation.add("3", [12, 13, 14], 12, false);
+		lilBf.animation.add("yeah", [17, 20, 23], 12, false);
+		lilBf.animation.play("idle");
+		lilBf.animation.finishCallback = function(name:String){
+			lilBf.animation.play(name, true, false, lilBf.animation.getByName(name).numFrames - 2);
+		}
+		lilBf.scrollFactor.set();
+		add(lilBf);
+
+		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image("editors/lilOpp"), true, 300, 256);
+		lilOpp.animation.add("idle", [0, 1], 12, true);
+		lilOpp.animation.add("0", [3, 4, 5], 12, false);
+		lilOpp.animation.add("1", [6, 7, 8], 12, false);
+		lilOpp.animation.add("2", [9, 10, 11], 12, false);
+		lilOpp.animation.add("3", [12, 13, 14], 12, false);
+		lilOpp.animation.play("idle");
+		lilOpp.animation.finishCallback = function(name:String){
+			lilOpp.animation.play(name, true, false, lilOpp.animation.getByName(name).numFrames - 2);
+		}
+		lilOpp.scrollFactor.set();
+		add(lilOpp);
 
 		gridLayer = new FlxTypedGroup<FlxSprite>();
 		add(gridLayer);
@@ -1695,6 +1730,20 @@ class ChartingState extends MusicBeatState
 	{
 		curStep = recalculateSteps();
 
+		curRenderedNotes.forEach(function(x:Note) {
+
+			
+			if(x.y < strumLine.y && FlxG.sound.music.playing){
+				if(x.mustPress){
+					lilBf.animation.play("" + (x.noteData % 4), true);
+				}
+				else if(!x.mustPress){
+					lilOpp.animation.play("" + (x.noteData % 4), true);
+				}
+			}
+
+		});
+
 		if(FlxG.sound.music.time < 0) {
 			FlxG.sound.music.pause();
 			FlxG.sound.music.time = 0;
@@ -1921,6 +1970,17 @@ class ChartingState extends MusicBeatState
 					if(opponentVocals != null) opponentVocals.play();
 				}
 				else FlxG.sound.music.pause();
+
+				if (FlxG.sound.music.playing)
+					{
+						lilBf.animation.play("idle");
+						lilOpp.animation.play("idle");
+					}
+					else
+					{
+						lilBf.animation.play("idle");
+						lilOpp.animation.play("idle");
+					}
 			}
 
 			if (!FlxG.keys.pressed.ALT && FlxG.keys.justPressed.R)
@@ -1933,6 +1993,8 @@ class ChartingState extends MusicBeatState
 
 			if (FlxG.mouse.wheel != 0)
 			{
+				lilBf.animation.play("idle");
+				lilOpp.animation.play("idle");
 				FlxG.sound.music.pause();
 				if (!mouseQuant)
 					FlxG.sound.music.time -= (FlxG.mouse.wheel * Conductor.stepCrochet*0.8);
@@ -1959,7 +2021,8 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
 			{
 				FlxG.sound.music.pause();
-
+		lilBf.animation.play("idle");
+		lilOpp.animation.play("idle");
 				var holdingShift:Float = 1;
 				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
 				else if (FlxG.keys.pressed.SHIFT) holdingShift = 4;
@@ -2186,6 +2249,8 @@ class ChartingState extends MusicBeatState
 							var soundToPlay = note.hitsound;
 							if(_song.player1 == 'gf') //Easter egg
 								soundToPlay = 'GF_' + Std.string(data + 1);
+
+							if (note.mustPress){}
 
 							FlxG.sound.play(Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
 							playedSound[data] = true;
@@ -2548,6 +2613,8 @@ class ChartingState extends MusicBeatState
 	{
 		updateGrid();
 
+		lilBf.animation.play("idle");
+		lilOpp.animation.play("idle");
 		FlxG.sound.music.pause();
 		// Basically old shit from changeSection???
 		FlxG.sound.music.time = sectionStartTime();
@@ -2575,7 +2642,8 @@ class ChartingState extends MusicBeatState
 			if (updateMusic)
 			{
 				FlxG.sound.music.pause();
-
+				lilBf.animation.play("idle");
+				lilOpp.animation.play("idle");
 				FlxG.sound.music.time = sectionStartTime();
 				pauseAndSetVocalsTime();
 				updateCurStep();
@@ -2600,6 +2668,8 @@ class ChartingState extends MusicBeatState
 		{
 			changeSection();
 		}
+		lilBf.animation.play("idle");
+		lilOpp.animation.play("idle");
 		Conductor.songPosition = FlxG.sound.music.time;
 		if(!waveformChanged) updateWaveform();
 	}
