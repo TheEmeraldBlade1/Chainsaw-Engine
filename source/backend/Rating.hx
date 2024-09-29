@@ -8,7 +8,7 @@ class Rating
 	public var image:String = '';
 	public var hitWindow:Null<Int> = 0; //ms
 	public var ratingMod:Float = 1;
-	public var score:Int = 700;
+	public var score:Int = 400;
 	public var noteSplash:Bool = true;
 	public var hits:Int = 0;
 
@@ -32,7 +32,7 @@ class Rating
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.67;
-		rating.score = 200;
+		rating.score = 300;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
@@ -44,7 +44,7 @@ class Rating
 
 		var rating:Rating = new Rating('shit');
 		rating.ratingMod = 0;
-		rating.score = -200;
+		rating.score = -100;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 		return ratingsData;

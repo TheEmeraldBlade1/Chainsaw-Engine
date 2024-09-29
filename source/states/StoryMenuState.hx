@@ -134,6 +134,7 @@ class StoryMenuState extends MusicBeatState
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
+		leftArrow.visible = false;
 		difficultySelectors.add(leftArrow);
 
 		Difficulty.resetList();
@@ -153,6 +154,7 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
+		rightArrow.visible = false;
 		difficultySelectors.add(rightArrow);
 
 		add(bgYellow);

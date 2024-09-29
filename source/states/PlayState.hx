@@ -1257,6 +1257,7 @@ class PlayState extends MusicBeatState
 	// cool right? -Crow
 	public dynamic function updateScore(miss:Bool = false)
 	{
+		var scoreComma:String = FlxStringUtil.formatMoney(songScore, false, true);
 		var ret:Dynamic = callOnScripts('preUpdateScore', [miss], true);
 		if (ret == LuaUtils.Function_Stop)
 			return;
@@ -1264,7 +1265,7 @@ class PlayState extends MusicBeatState
 		// "tempScore" variable is used to prevent another memory leak, just in case
 		// "\n" here prevents the text from being cut off by beat zooms
 		if (ClientPrefs.data.uiType == 'Forever'){
-			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text = 'Score: ' + scoreComma;
 			scoreTxt.text += " • Accuracy: ";
 			if (ratingName != '?'){
 				scoreTxt.text += CoolUtil.floorDecimal(ratingPercent * 100, 2) + '%';
@@ -1277,7 +1278,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.text += " • Combo Breaks: " + songMisses;
 			scoreTxt.text += " • Rank: " + ratingName;
 		}else if (ClientPrefs.data.uiType == 'Accuracy Mod'){
-			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text = 'Score: ' + scoreComma;
 			scoreTxt.text += " | Misses: " + songMisses;
 			scoreTxt.text += " | Accuracy: ";
 			if (ratingName != '?'){
@@ -1286,7 +1287,7 @@ class PlayState extends MusicBeatState
 				scoreTxt.text += "0%";
 			}
 		}else if (ClientPrefs.data.uiType == 'Psych'){
-			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text = 'Score: ' + scoreComma;
 			scoreTxt.text += " | Misses: " + songMisses;
 			scoreTxt.text += " | Rating: ";
 			scoreTxt.text += ratingName;
@@ -1294,7 +1295,7 @@ class PlayState extends MusicBeatState
 				scoreTxt.text += " (" + CoolUtil.psychAccuracy(ratingPercent, 100) + '%)';
 			}
 		}else{
-			scoreTxt.text = 'Score: ' + songScore;
+			scoreTxt.text = 'Score: ' + scoreComma;
 		}
 		if (ClientPrefs.data.uiType == 'Micd Up'){
 			missTxt.text = 'Misses: ' + songMisses;

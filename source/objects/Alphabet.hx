@@ -18,6 +18,9 @@ class Alphabet extends FlxSpriteGroup
 	public var targetY:Int = 0;
 	public var changeX:Bool = true;
 	public var changeY:Bool = true;
+	public var itemType:String = "Classic";
+	var groupY:Float = 0.48;
+	var groupX:Float = 90;
 
 	public var alignment(default, set):Alignment = LEFT;
 	public var scaleX(default, set):Float = 1;
@@ -162,24 +165,69 @@ class Alphabet extends FlxSpriteGroup
 	override function update(elapsed:Float)
 	{
 		if (isMenuItem)
-		{
-			var lerpVal:Float = Math.exp(-elapsed * 9.6);
-			if(changeX)
-				x = FlxMath.lerp((targetY * distancePerItem.x) + startPosition.x, x, lerpVal);
-			if(changeY)
-				y = FlxMath.lerp((targetY * 1.3 * distancePerItem.y) + startPosition.y, y, lerpVal);
-		}
+			{
+				var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+				switch (itemType) 
+				{
+					case "Classic":
+						var lerpVal:Float = Math.exp(-elapsed * 9.6);
+						if(changeX)
+							x = FlxMath.lerp((targetY * distancePerItem.x) + startPosition.x, x, lerpVal);
+						if(changeY)
+							y = FlxMath.lerp((targetY * 1.3 * distancePerItem.y) + startPosition.y, y, lerpVal);
+					case "Vertical":
+						y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+					case "C-Shape":
+						y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+	
+						x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+						if (scaledY < 0)
+							x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+	
+						if (x > FlxG.width + 30)
+							x = FlxG.width + 30;
+	
+					case "D-Shape":
+						y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+	
+						x = FlxMath.lerp(x, Math.exp(Math.abs(scaledY * 0.8)) * -70 + (FlxG.width * 0.35), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+	
+						if (x < -900)
+							x = -900;
+				}
+			}
 		super.update(elapsed);
 	}
 
 	public function snapToPosition()
 	{
-		if (isMenuItem)
+		var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+		switch (itemType) 
 		{
-			if(changeX)
-				x = (targetY * distancePerItem.x) + startPosition.x;
-			if(changeY)
-				y = (targetY * 1.3 * distancePerItem.y) + startPosition.y;
+			case "Classic":
+				if(changeX)
+					x = (targetY * distancePerItem.x) + startPosition.x;
+				if(changeY)
+					y = (targetY * 1.3 * distancePerItem.y) + startPosition.y;
+			case "Vertical":
+				y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+			case "C-Shape":
+				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+				if (scaledY < 0)
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+
+				if (x > FlxG.width + 30)
+					x = FlxG.width + 30;
+
+			case "D-Shape":
+				y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+
+				x = FlxMath.lerp(x, Math.exp(Math.abs(scaledY * 0.8)) * -70 + (FlxG.width * 0.35), 0.16 / (openfl.Lib.application.window.frameRate / 60));
+
+				if (x < -900)
+					x = -900;
 		}
 	}
 

@@ -47,6 +47,7 @@ class MasterEditorMenu extends MusicBeatState
 			leText.isMenuItem = true;
 			leText.targetY = i;
 			grpTexts.add(leText);
+			leText.itemType = 'D-Shape';
 			leText.snapToPosition();
 		}
 		

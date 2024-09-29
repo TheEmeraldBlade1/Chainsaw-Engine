@@ -1,5 +1,6 @@
 {
 	"storyName": "DUE DEBTS",
+	"difficulties": "hard",
 	"hideFreeplay": false,
 	"weekBackground": "phillyStreets",
 	"weekBefore": "week7",
@@ -9,11 +10,6 @@
 		253
 	],
 	"startUnlocked": true,
-	"weekCharacters": [
-		"",
-		"pico",
-		""
-	],
 	"songs": [
 		[
 			"darnell",
@@ -24,8 +20,43 @@
 				41
 			],
 			"DANELL"
+		],
+		[
+			"lit up",
+			"dar",
+			[
+				61,
+				59,
+				41
+			],
+			"DANELL"
+		],
+		[
+			"2hot",
+			"dar",
+			[
+				61,
+				59,
+				41
+			],
+			"DANELL"
+		],
+		[
+			"blazin",
+			"dar",
+			[
+				61,
+				59,
+				41
+			],
+			"DANELLF"
 		]
 	],
 	"hideStoryMode": false,
+	"weekCharacters": [
+		"darnell",
+		"pico-player",
+		"nene"
+	],
 	"weekName": "week end 1"
 }

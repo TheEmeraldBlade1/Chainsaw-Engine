@@ -35,6 +35,8 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
+	var bfdj:FlxSprite;
+
 	override function create()
 	{
 		#if MODS_ALLOWED
@@ -113,6 +115,13 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 
+		bfdj = new FlxSprite().makeGraphic(0, 30, '');
+		bfdj.frames = Paths.getSparrowAtlas('FREEPLAY/bfdj');
+		bfdj.animation.addByPrefix('idle', 'Boyfriend DJ0', 24, false);
+		bfdj.animation.addByPrefix('confirm', 'Boyfriend DJ confirm0', 24, false);
+		bfdj.animation.play('idle');
+		add(bfdj);
+
 		var psychVer:FlxText = new FlxText(12, FlxG.height - 44, 0, "Chainsaw Engine v" + psychEngineVersion, 12);
 		psychVer.scrollFactor.set();
 		psychVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -151,8 +160,11 @@ class MainMenuState extends MusicBeatState
 				FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
+
 		if (!selectedSomethin)
 		{
+			
+			bfdj.animation.play('idle');
 			if (controls.UI_UP_P)
 				changeItem(-1);
 
@@ -170,6 +182,7 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.mouse.visible = false;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
+				bfdj.animation.play('confirm');
 				if (optionShit[curSelected] == 'gameplay_changers')
 				{
 					openSubState(new GameplayChangersSubstate());

@@ -128,6 +128,8 @@ class FreeplayState extends MusicBeatState
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			// songText.screenCenter(X);
+
+			songText.itemType = 'D-Shape';
 		}
 		WeekData.setDirectoryFromWeek();
 
@@ -571,6 +573,7 @@ class FreeplayState extends MusicBeatState
 			item.visible = item.active = true;
 			item.x = ((item.targetY - lerpSelected) * item.distancePerItem.x) + item.startPosition.x;
 			item.y = ((item.targetY - lerpSelected) * 1.3 * item.distancePerItem.y) + item.startPosition.y;
+			item.itemType = 'D-Shape';
 
 			var icon:HealthIcon = iconArray[i];
 			icon.visible = icon.active = true;

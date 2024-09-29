@@ -24,8 +24,6 @@ class PhillyStreets extends BaseStage
 		addSprite(phillyConstruction);
 		var phillyHighwayLights:BGSprite = new BGSprite('weekend1/phillyHighwayLights', 284, 305, 1, 1);
 		addSprite(phillyHighwayLights);
-		var phillyHighwayLights_lightmap:BGSprite = new BGSprite('weekend1/phillyHighwayLights_lightmap', 284, 305, 1, 1);
-		addSprite(phillyHighwayLights_lightmap);
 		var phillyHighway:BGSprite = new BGSprite('weekend1/phillyHighway', 139, 209, 1, 1);
 		addSprite(phillyHighway);
 		var phillySmog:BGSprite = new BGSprite('weekend1/phillySmog', -6, 245, 1, 1);
@@ -48,8 +46,6 @@ class PhillyStreets extends BaseStage
 		phillyTraffic.animation.addByPrefix('tored', 'greentored', 24, false);
 		phillyTraffic.animation.addByPrefix('togreen', 'redtogreen', 24, false);
 		addSprite(phillyTraffic);
-		var phillyTraffic_lightmap:BGSprite = new BGSprite('weekend1/phillyTraffic_lightmap', 1840, 608, 0.9, 1);
-		addSprite(phillyTraffic_lightmap);
 		var phillyForeground:BGSprite = new BGSprite('weekend1/phillyForeground', 88, 317, 1, 1);
 		addSprite(phillyForeground);
 	}

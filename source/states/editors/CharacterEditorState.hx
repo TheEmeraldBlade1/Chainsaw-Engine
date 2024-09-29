@@ -422,16 +422,16 @@ class CharacterEditorState extends MusicBeatState
 			final _template:CharacterFile =
 			{
 				animations: [
-					newAnim('idle', 'BF idle dance'),
-					newAnim('singLEFT', 'BF NOTE LEFT0'),
-					newAnim('singDOWN', 'BF NOTE DOWN0'),
-					newAnim('singUP', 'BF NOTE UP0'),
-					newAnim('singRIGHT', 'BF NOTE RIGHT0')
+					newAnim('idle', 'idle'),
+					newAnim('singUP', 'up'),
+					newAnim('singDOWN', 'down'),
+					newAnim('singLEFT', 'left'),
+					newAnim('singRIGHT', 'right')
 				],
 				no_antialiasing: false,
 				flip_x: false,
 				healthicon: 'face',
-				image: 'characters/BOYFRIEND',
+				image: 'characters/lilopp',
 				sing_duration: 4,
 				scale: 1,
 				healthbar_colors: [161, 161, 161],
