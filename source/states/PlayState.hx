@@ -1680,7 +1680,11 @@ class PlayState extends MusicBeatState
 			strumTime: event[0] + ClientPrefs.data.noteOffset,
 			event: event[1][i][0],
 			value1: event[1][i][1],
-			value2: event[1][i][2]
+			value2: event[1][i][2],
+			value3: event[1][i][3],
+			value4: event[1][i][4],
+			value5: event[1][i][5],
+			value6: event[1][i][6]
 		};
 		eventNotes.push(subEvent);
 		eventPushed(subEvent);
@@ -1943,17 +1947,40 @@ class PlayState extends MusicBeatState
 		}
 		else if (!paused && updateTime)
 		{
-			var curTime:Float = Math.max(0, Conductor.songPosition - ClientPrefs.data.noteOffset);
-			songPercent = (curTime / songLength);
+			if(ClientPrefs.data.timeBarType != 'Chainsaw'){
+				var curTime:Float = Math.max(0, Conductor.songPosition - ClientPrefs.data.noteOffset);
+				songPercent = (curTime / songLength);
+	
+				var songCalc:Float = (songLength - curTime);
+				if(ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime;
+	
+				var secondsTotal:Int = Math.floor(songCalc / 1000);
+				if(secondsTotal < 0) secondsTotal = 0;
+	
+				if(ClientPrefs.data.timeBarType != 'Song Name')
+					timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+			}
+			else
+			{
+				var curTime:Float = Conductor.songPosition;
+				if(curTime < 0) curTime = 0;
+				songPercent = (curTime / songLength);
 
-			var songCalc:Float = (songLength - curTime);
-			if(ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime;
+				var songCalc:Float = (songLength - curTime); songCalc = curTime; 
+				var songCalc2:Float = (songLength - curTime);
 
-			var secondsTotal:Int = Math.floor(songCalc / 1000);
-			if(secondsTotal < 0) secondsTotal = 0;
+				var secondsTotal:Int = Math.floor(songCalc / 1000); if(secondsTotal < 0) secondsTotal = 0; 
+				var secondsTotal2:Int = Math.floor(songCalc2 / 1000); if(secondsTotal2 < 0) secondsTotal2 = 0;
 
-			if(ClientPrefs.data.timeBarType != 'Song Name')
+				var minutesRemaining:Int = Math.floor(secondsTotal / 60);
+				var secondsRemaining:String = '' + secondsTotal % 60;
+				if(secondsRemaining.length < 2) secondsRemaining = '0' + secondsRemaining; //Dunno how to make it display a zero first in Haxe lol
 				timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+				timeTxt.text += " / ";
+				timeTxt.text += FlxStringUtil.formatTime(Math.floor(songLength / 1000), false);
+				timeTxt.text += " / ";
+				timeTxt.text += FlxStringUtil.formatTime(secondsTotal2, false);
+			}
 		}
 
 		if (camZooming)
@@ -2246,14 +2273,34 @@ class PlayState extends MusicBeatState
 			if(eventNotes[0].value2 != null)
 				value2 = eventNotes[0].value2;
 
-			triggerEvent(eventNotes[0].event, value1, value2, leStrumTime);
+			var value3:String = '';
+			if(eventNotes[0].value3 != null)
+				value3 = eventNotes[0].value3;
+
+			var value4:String = '';
+			if(eventNotes[0].value4 != null)
+				value4 = eventNotes[0].value4;
+
+			var value5:String = '';
+			if(eventNotes[0].value5 != null)
+				value5 = eventNotes[0].value5;
+
+			var value6:String = '';
+			if(eventNotes[0].value6 != null)
+				value6 = eventNotes[0].value6;
+
+			triggerEvent(eventNotes[0].event, value1, value2, value3, value4, value5, value6, leStrumTime);
 			eventNotes.shift();
 		}
 	}
 
-	public function triggerEvent(eventName:String, value1:String, value2:String, strumTime:Float) {
+	public function triggerEvent(eventName:String, value1:String, value2:String, value3:String, value4:String, value5:String, value6:String, strumTime:Float) {
 		var flValue1:Null<Float> = Std.parseFloat(value1);
 		var flValue2:Null<Float> = Std.parseFloat(value2);
+		var flValue3:Null<Float> = Std.parseFloat(value3);
+		var flValue4:Null<Float> = Std.parseFloat(value4);
+		var flValue5:Null<Float> = Std.parseFloat(value5);
+		var flValue6:Null<Float> = Std.parseFloat(value6);
 		if(Math.isNaN(flValue1)) flValue1 = null;
 		if(Math.isNaN(flValue2)) flValue2 = null;
 

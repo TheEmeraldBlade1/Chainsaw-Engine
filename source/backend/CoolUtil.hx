@@ -75,6 +75,11 @@ class CoolUtil
 			return Math.floor(value * valueMulti);
 		}
 
+		public static function roundFloat(value:Float, valueMulti:Int):Float
+			{
+				return Math.round(value * valueMulti);
+			}
+
 	inline public static function dominantColor(sprite:flixel.FlxSprite):Int
 	{
 		var countByColor:Map<Int, Int> = [];

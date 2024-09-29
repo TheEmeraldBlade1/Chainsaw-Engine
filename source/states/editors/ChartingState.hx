@@ -146,6 +146,10 @@ class ChartingState extends MusicBeatState
 
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
+	var value3InputText:FlxUIInputText;
+	var value4InputText:FlxUIInputText;
+	var value5InputText:FlxUIInputText;
+	var value6InputText:FlxUIInputText;
 	var currentSongName:String;
 
 	var zoomTxt:FlxText;
@@ -1067,6 +1071,26 @@ class ChartingState extends MusicBeatState
 		value2InputText = new FlxUIInputText(20, 150, 100, "");
 		blockPressWhileTypingOn.push(value2InputText);
 
+		var text:FlxText = new FlxText(20, 170, 0, "Value 3:");
+		tab_group_event.add(text);
+		value3InputText = new FlxUIInputText(20, 190, 100, "");
+		blockPressWhileTypingOn.push(value3InputText);
+
+		var text:FlxText = new FlxText(150, 90, 0, "Value 4:");
+		tab_group_event.add(text);
+		value4InputText = new FlxUIInputText(150, 110, 100, "");
+		blockPressWhileTypingOn.push(value4InputText);
+
+		var text:FlxText = new FlxText(150, 130, 0, "Value 5:");
+		tab_group_event.add(text);
+		value5InputText = new FlxUIInputText(150, 150, 100, "");
+		blockPressWhileTypingOn.push(value5InputText);
+
+		var text:FlxText = new FlxText(150, 170, 0, "Value 6:");
+		tab_group_event.add(text);
+		value6InputText = new FlxUIInputText(150, 190, 100, "");
+		blockPressWhileTypingOn.push(value6InputText);
+
 		// New event buttons
 		var removeButton:FlxButton = new FlxButton(eventDropDown.x + eventDropDown.width + 10, eventDropDown.y, '-', function()
 		{
@@ -1145,6 +1169,10 @@ class ChartingState extends MusicBeatState
 		tab_group_event.add(descText);
 		tab_group_event.add(value1InputText);
 		tab_group_event.add(value2InputText);
+		tab_group_event.add(value3InputText);
+		tab_group_event.add(value4InputText);
+		tab_group_event.add(value5InputText);
+		tab_group_event.add(value6InputText);
 		tab_group_event.add(eventDropDown);
 
 		UI_box.addGroup(tab_group_event);
@@ -1681,6 +1709,35 @@ class ChartingState extends MusicBeatState
 					if(curSelectedNote[1][curEventSelected] != null)
 					{
 						curSelectedNote[1][curEventSelected][2] = value2InputText.text;
+						updateGrid();
+					}
+					
+				}
+				else if(sender == value3InputText) {
+					if(curSelectedNote[1][curEventSelected] != null)
+					{
+						curSelectedNote[1][curEventSelected][3] = value3InputText.text;
+						updateGrid();
+					}
+				}
+				else if(sender == value4InputText) {
+					if(curSelectedNote[1][curEventSelected] != null)
+					{
+						curSelectedNote[1][curEventSelected][4] = value4InputText.text;
+						updateGrid();
+					}
+				}
+				else if(sender == value5InputText) {
+					if(curSelectedNote[1][curEventSelected] != null)
+					{
+						curSelectedNote[1][curEventSelected][5] = value5InputText.text;
+						updateGrid();
+					}
+				}
+				else if(sender == value6InputText) {
+					if(curSelectedNote[1][curEventSelected] != null)
+					{
+						curSelectedNote[1][curEventSelected][6] = value6InputText.text;
 						updateGrid();
 					}
 				}
@@ -2841,7 +2898,9 @@ class ChartingState extends MusicBeatState
 				var note:Note = setupNoteData(i, false);
 				curRenderedNotes.add(note);
 
-				var text:String = 'Event: ' + note.eventName + ' (' + Math.floor(note.strumTime) + ' ms)' + '\nValue 1: ' + note.eventVal1 + '\nValue 2: ' + note.eventVal2;
+				var text:String = 'Event: ' + note.eventName + ' (' + Math.floor(note.strumTime) + ' ms)' + '\nValue 1: ' + note.eventVal1 + '\nValue 2: ' 
+				+ note.eventVal2 + '\nValue 3: ' + note.eventVal3 + '\nValue 4: ' + note.eventVal4 
+				+ '\nValue 5: ' + note.eventVal5 + '\nValue 6: ' + note.eventVal6;
 				if(note.eventLength > 1) text = note.eventLength + ' Events:\n' + note.eventName;
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
@@ -2911,6 +2970,10 @@ class ChartingState extends MusicBeatState
 			{
 				note.eventVal1 = i[1][0][1];
 				note.eventVal2 = i[1][0][2];
+				note.eventVal3 = i[1][0][3];
+				note.eventVal4 = i[1][0][4];
+				note.eventVal5 = i[1][0][5];
+				note.eventVal6 = i[1][0][6];
 			}
 			note.noteData = -1;
 			daNoteInfo = -1;

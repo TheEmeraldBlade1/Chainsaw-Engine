@@ -792,10 +792,14 @@ class FunkinLua {
 		});
 
 		// others
-		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
+		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic, arg3:Dynamic, arg4:Dynamic, arg5:Dynamic, arg6:Dynamic) {
 			var value1:String = arg1;
 			var value2:String = arg2;
-			game.triggerEvent(name, value1, value2, Conductor.songPosition);
+			var value3:String = arg3;
+			var value4:String = arg4;
+			var value5:String = arg5;
+			var value6:String = arg6;
+			game.triggerEvent(name, value1, value2, value3, value4, value5, value6, Conductor.songPosition);
 			//trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});

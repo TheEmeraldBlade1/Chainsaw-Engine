@@ -1,15 +1,21 @@
 {
 	"storyName": "DUE DEBTS",
-	"difficulties": "hard",
+	"difficulties": "hard,nightmare",
 	"hideFreeplay": false,
 	"weekBackground": "phillyStreets",
-	"weekBefore": "week7",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "week7",
 	"startUnlocked": true,
+	"weekCharacters": [
+		"darnell",
+		"pico-player",
+		"nene"
+	],
+	"hideStoryMode": false,
 	"songs": [
 		[
 			"darnell",
@@ -51,12 +57,6 @@
 			],
 			"DANELLF"
 		]
-	],
-	"hideStoryMode": false,
-	"weekCharacters": [
-		"darnell",
-		"pico-player",
-		"nene"
 	],
 	"weekName": "week end 1"
 }

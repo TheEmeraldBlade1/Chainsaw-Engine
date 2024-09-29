@@ -16,7 +16,11 @@ typedef EventNote = {
 	strumTime:Float,
 	event:String,
 	value1:String,
-	value2:String
+	value2:String,
+	value3:String,
+	value4:String,
+	value5:String,
+	value6:String
 }
 
 typedef NoteSplashData = {
@@ -70,6 +74,10 @@ class Note extends FlxSprite
 	public var eventLength:Int = 0;
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
+	public var eventVal3:String = '';
+	public var eventVal4:String = '';
+	public var eventVal5:String = '';
+	public var eventVal6:String = '';
 
 	public var rgbShader:RGBShaderReference;
 	public static var globalRgbShaders:Array<RGBPalette> = [];

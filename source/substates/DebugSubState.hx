@@ -17,7 +17,7 @@ class DebugSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Skip Time', 'End Song'];
+	var menuItemsOG:Array<String> = ['Resume', 'Skip Time', 'End Song', 'Leave Charting Mode'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -224,6 +224,9 @@ class DebugSubState extends MusicBeatSubstate
 					PlayState.instance.notes.clear();
 					PlayState.instance.unspawnNotes = [];
 					PlayState.instance.finishSong(true);
+				case "Leave Charting Mode":
+					restartSong();
+					PlayState.chartingMode = false;
 			}
 		}
 	}

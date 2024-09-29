@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="high_score_assets.png" width="524" height="477">
+	<SubTexture name="highscore small0001" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0002" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0003" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0004" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0005" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0006" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0007" x="0" y="53" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0008" x="0" y="53" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0009" x="0" y="106" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0010" x="0" y="106" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0011" x="0" y="159" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0012" x="0" y="159" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0013" x="0" y="212" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0014" x="0" y="265" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0015" x="0" y="318" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0016" x="365" y="0" width="53" height="365" rotated="true" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0017" x="0" y="371" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0018" x="0" y="371" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0019" x="418" y="0" width="53" height="365" rotated="true" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0020" x="418" y="0" width="53" height="365" rotated="true" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0021" x="0" y="424" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0022" x="0" y="424" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0023" x="471" y="0" width="53" height="365" rotated="true" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0024" x="471" y="0" width="53" height="365" rotated="true" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0025" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0026" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+	<SubTexture name="highscore small0027" x="0" y="0" width="365" height="53" frameX="-0" frameY="-0" frameWidth="365" frameHeight="53"/>
+</TextureAtlas>
