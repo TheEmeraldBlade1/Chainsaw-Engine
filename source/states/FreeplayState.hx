@@ -7,6 +7,9 @@ import backend.Song;
 import objects.HealthIcon;
 import objects.MusicPlayer;
 
+import flixel.group.FlxGroup;
+import flixel.graphics.FlxGraphic;
+
 import substates.GameplayChangersSubstate;
 import substates.ResetScoreSubState;
 
@@ -48,6 +51,11 @@ class FreeplayState extends MusicBeatState
 	var bottomBG:FlxSprite;
 
 	var player:MusicPlayer;
+
+	var difficultySelectors:FlxGroup;
+	var sprDifficulty:FlxSprite;
+	var leftArrow:FlxSprite;
+	var rightArrow:FlxSprite;
 
 	override function create()
 	{
@@ -143,6 +151,40 @@ class FreeplayState extends MusicBeatState
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
+
+		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
+
+		difficultySelectors = new FlxGroup();
+		add(difficultySelectors);
+
+		leftArrow = new FlxSprite(850, 50);
+		leftArrow.antialiasing = ClientPrefs.data.antialiasing;
+		leftArrow.frames = ui_tex;
+		leftArrow.animation.addByPrefix('idle', "arrow left");
+		leftArrow.animation.addByPrefix('press', "arrow push left");
+		leftArrow.animation.play('idle');
+		leftArrow.visible = false;
+		difficultySelectors.add(leftArrow);
+
+		Difficulty.resetList();
+		if(lastDifficultyName == '')
+		{
+			lastDifficultyName = Difficulty.getDefault();
+		}
+		curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(lastDifficultyName)));
+		
+		sprDifficulty = new FlxSprite(0, leftArrow.y);
+		sprDifficulty.antialiasing = ClientPrefs.data.antialiasing;
+		difficultySelectors.add(sprDifficulty);
+
+		rightArrow = new FlxSprite(leftArrow.x + 376, leftArrow.y);
+		rightArrow.antialiasing = ClientPrefs.data.antialiasing;
+		rightArrow.frames = ui_tex;
+		rightArrow.animation.addByPrefix('idle', 'arrow right');
+		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
+		rightArrow.animation.play('idle');
+		rightArrow.visible = false;
+		difficultySelectors.add(rightArrow);
 
 		add(scoreText);
 
@@ -432,6 +474,8 @@ class FreeplayState extends MusicBeatState
 		vocals = null;
 	}
 
+	var tweenDifficulty:FlxTween;
+
 	function changeDiff(change:Int = 0)
 	{
 		if (player.playingMusic)
@@ -444,6 +488,23 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty >= Difficulty.list.length)
 			curDifficulty = 0;
 
+		var diff:String = Difficulty.getString(curDifficulty);
+		var newImage:FlxGraphic = Paths.image('menudifficulties/freeplay/' + Paths.formatToSongPath(diff));
+		if(sprDifficulty.graphic != newImage)
+			{
+				sprDifficulty.loadGraphic(newImage);
+				sprDifficulty.x = leftArrow.x + 60;
+				sprDifficulty.x += (308 - sprDifficulty.width) / 3;
+				sprDifficulty.alpha = 0;
+				sprDifficulty.y = leftArrow.y - 15;
+	
+				if(tweenDifficulty != null) tweenDifficulty.cancel();
+				tweenDifficulty = FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07, {onComplete: function(twn:FlxTween)
+				{
+					tweenDifficulty = null;
+				}});
+			}
+
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
@@ -451,9 +512,9 @@ class FreeplayState extends MusicBeatState
 
 		lastDifficultyName = Difficulty.getString(curDifficulty);
 		if (Difficulty.list.length > 1)
-			diffText.text = '< ' + lastDifficultyName.toUpperCase() + ' >';
+			diffText.text = '';
 		else
-			diffText.text = lastDifficultyName.toUpperCase();
+			diffText.text = '';
 
 		positionHighscore();
 		missingText.visible = false;

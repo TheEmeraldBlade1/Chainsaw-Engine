@@ -88,7 +88,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		"What should the ui display?",
 		'uiType',
 		'string',
-		['Micd Up', 'Vanilla', 'Forever', 'Accuracy Mod', 'Psych']);
+		['Micd Up', 'Vanilla', 'Forever', 'Accuracy Mod', 'Psych', 'Chainsaw']);
 	addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

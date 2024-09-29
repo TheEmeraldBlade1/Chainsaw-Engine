@@ -107,7 +107,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			optionText.setScale(0.8);
 			optionText.targetY = i;
 			grpOptions.add(optionText);
-			optionText.itemType = 'D-Shape';
+			optionText.itemType = 'Vertical';
 
 			if(optionsArray[i].type == 'bool') {
 				optionText.x += 90;

@@ -35,19 +35,6 @@ class PauseSubState extends MusicBeatSubstate
 	override function create()
 	{
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
-
-		if(PlayState.chartingMode)
-		{
-			menuItemsOG.insert(5, 'Leave Charting Mode');
-			
-			var num:Int = 0;
-			if(!PlayState.instance.startingSong)
-			{
-				num = 1;
-				menuItemsOG.insert(6, 'Skip Time');
-			}
-			menuItemsOG.insert(6 + num, 'End Song');
-		}
 		menuItems = menuItemsOG;
 
 		for (i in 0...Difficulty.list.length) {
@@ -408,7 +395,7 @@ class PauseSubState extends MusicBeatSubstate
 			var item = new Alphabet(90, 320, menuItems[i], true);
 			item.isMenuItem = true;
 			item.targetY = i;
-			item.itemType = 'C-Shape';
+			item.itemType = 'Vertical';
 			grpMenuShit.add(item);
 
 			if(menuItems[i] == 'Skip Time')

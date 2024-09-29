@@ -35,7 +35,7 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
-	var bfdj:FlxSprite;
+	var char:FlxSprite;
 
 	override function create()
 	{
@@ -43,8 +43,6 @@ class MainMenuState extends MusicBeatState
 		Mods.pushGlobalMods();
 		#end
 		Mods.loadTopMod();
-
-		FlxG.mouse.visible = true;
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
@@ -115,12 +113,12 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 
-		bfdj = new FlxSprite().makeGraphic(0, 30, '');
-		bfdj.frames = Paths.getSparrowAtlas('FREEPLAY/bfdj');
-		bfdj.animation.addByPrefix('idle', 'Boyfriend DJ0', 24, false);
-		bfdj.animation.addByPrefix('confirm', 'Boyfriend DJ confirm0', 24, false);
-		bfdj.animation.play('idle');
-		add(bfdj);
+		char = new FlxSprite().makeGraphic(0, 30, '');
+		char.frames = Paths.getSparrowAtlas('characters/nene');
+		char.animation.addByPrefix('idle', 'idle', 24, false);
+		char.animation.play('idle');
+		char.antialiasing = ClientPrefs.data.antialiasing;
+		add(char);
 
 		var psychVer:FlxText = new FlxText(12, FlxG.height - 44, 0, "Chainsaw Engine v" + psychEngineVersion, 12);
 		psychVer.scrollFactor.set();
@@ -164,7 +162,7 @@ class MainMenuState extends MusicBeatState
 		if (!selectedSomethin)
 		{
 			
-			bfdj.animation.play('idle');
+			char.animation.play('idle');
 			if (controls.UI_UP_P)
 				changeItem(-1);
 
@@ -182,7 +180,6 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.mouse.visible = false;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				bfdj.animation.play('confirm');
 				if (optionShit[curSelected] == 'gameplay_changers')
 				{
 					openSubState(new GameplayChangersSubstate());
@@ -247,6 +244,11 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
+			if (FlxG.keys.justPressed.EIGHT)
+				{
+					selectedSomethin = true;
+					MusicBeatState.switchState(new states.Results());
+				}
 			#end
 		}
 
@@ -259,6 +261,72 @@ class MainMenuState extends MusicBeatState
 		menuItems.members[curSelected].animation.play('idle');
 
 		curSelected += huh;
+
+		/*if (curSelected == 0 || curSelected == menuItems.length - 1){
+			remove(char);
+			char = new FlxSprite().makeGraphic(0, 30, '');
+			char.frames = Paths.getSparrowAtlas('characters/nene');
+			char.animation.addByPrefix('idle', 'idle', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			add(char);
+		}
+		if (curSelected == 1){
+			remove(char);
+			char = new FlxSprite().makeGraphic(120, 30, '');
+			char.frames = Paths.getSparrowAtlas('characters/danfi');
+			char.animation.addByPrefix('idle', 'idle', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			char.flipX = true;
+			char.x = 60;
+			char.y = 30;
+			add(char);
+		}
+		if (curSelected == 2){
+			remove(char);
+			char = new FlxSprite().makeGraphic(120, 30, '');
+			char.frames = Paths.getSparrowAtlas('characters/pf');
+			char.animation.addByPrefix('idle', 'idle', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			char.x = 60;
+			char.y = 30;
+			add(char);
+		}
+		if (curSelected == 3){
+			remove(char);
+			char = new FlxSprite().makeGraphic(120, 0, '');
+			char.frames = Paths.getSparrowAtlas('characters/tankmanCaptain');
+			char.animation.addByPrefix('idle', 'Tankman Idle Dance', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			char.x = 60;
+			char.y = 0;
+			add(char);
+		}
+		if (curSelected == 4){
+			remove(char);
+			char = new FlxSprite().makeGraphic(120, 0, '');
+			char.frames = Paths.getSparrowAtlas('characters/DADDY_DEAREST');
+			char.animation.addByPrefix('idle', 'Dad idle dance', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			char.flipX = true;
+			char.x = 60;
+			char.y = 0;
+			add(char);
+		}
+		if (curSelected == 5){
+			remove(char);
+			char = new FlxSprite().makeGraphic(120, 30, '');
+			char.frames = Paths.getSparrowAtlas('characters/BOYFRIEND');
+			char.animation.addByPrefix('idle', 'BF idle dance', 24, false);
+			char.animation.play('idle');
+			char.antialiasing = ClientPrefs.data.antialiasing;
+			char.x = 60;
+			add(char);
+		}*/
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;

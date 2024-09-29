@@ -179,6 +179,7 @@ class PlayState extends MusicBeatState
 	public var gfSpeed:Int = 1;
 	public var health(default, set):Float = 50;
 	public var combo:Int = 0;
+	public var highestCombo:Int = 0;
 
 	public var healthBar:Bar;
 	public var timeBar:Bar;
@@ -582,6 +583,12 @@ class PlayState extends MusicBeatState
 			scoreTxt.borderSize = 1.25;
 			scoreTxt.visible = !ClientPrefs.data.hideHud;
 			uiGroup.add(scoreTxt);
+	}else if (ClientPrefs.data.uiType == 'Chainsaw'){
+		scoreTxt = new FlxText(healthBar.x + healthBar.width - 190 + 100, healthBar.y + 30, 0, '', 20);
+		scoreTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		uiGroup.add(scoreTxt);
+		scoreTxt.visible = !ClientPrefs.data.hideHud;
 	}else if (ClientPrefs.data.uiType == 'Accuracy Mod'){
 		scoreTxt = new FlxText(healthBar.x + healthBar.width / 2 - 150, healthBar.y + 50, 0, "", 20);
 		scoreTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -604,6 +611,19 @@ class PlayState extends MusicBeatState
 			scoreTxt.scrollFactor.set();
 			uiGroup.add(scoreTxt);
 			scoreTxt.visible = !ClientPrefs.data.hideHud;
+		}
+		if (ClientPrefs.data.uiType == 'Chainsaw'){
+			comboTxt = new FlxText(healthBar.x + healthBar.width - 190 - 150, healthBar.y + 30, 0, '', 20);
+			comboTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			comboTxt.scrollFactor.set();
+			uiGroup.add(comboTxt);
+			comboTxt.visible = !ClientPrefs.data.hideHud;
+
+			missTxt = new FlxText(comboTxt.x - 250, healthBar.y + 30, 0, '', 20);
+			missTxt.setFormat(Paths.font(mainFont), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			missTxt.scrollFactor.set();
+			uiGroup.add(missTxt);
+			missTxt.visible = !ClientPrefs.data.hideHud;
 		}
 		if (ClientPrefs.data.uiType == 'Micd Up'){
 			missTxt = new FlxText(scoreTxt.x, scoreTxt.y - 26, 0, "", 20);
@@ -1258,6 +1278,8 @@ class PlayState extends MusicBeatState
 	public dynamic function updateScore(miss:Bool = false)
 	{
 		var scoreComma:String = FlxStringUtil.formatMoney(songScore, false, true);
+		var missComma:String = FlxStringUtil.formatMoney(songMisses, false, true);
+		var comboComma:String = FlxStringUtil.formatMoney(combo, false, true);
 		var ret:Dynamic = callOnScripts('preUpdateScore', [miss], true);
 		if (ret == LuaUtils.Function_Stop)
 			return;
@@ -1275,11 +1297,11 @@ class PlayState extends MusicBeatState
 			if (songMisses == 0 && ratingName != '?'){
 				scoreTxt.text += ' [$ratingFC]';
 			}
-			scoreTxt.text += " • Combo Breaks: " + songMisses;
+			scoreTxt.text += " • Combo Breaks: " + missComma;
 			scoreTxt.text += " • Rank: " + ratingName;
 		}else if (ClientPrefs.data.uiType == 'Accuracy Mod'){
 			scoreTxt.text = 'Score: ' + scoreComma;
-			scoreTxt.text += " | Misses: " + songMisses;
+			scoreTxt.text += " | Misses: " + missComma;
 			scoreTxt.text += " | Accuracy: ";
 			if (ratingName != '?'){
 				scoreTxt.text += CoolUtil.floorDecimal(ratingPercent * 100, 2) + '%';
@@ -1288,7 +1310,7 @@ class PlayState extends MusicBeatState
 			}
 		}else if (ClientPrefs.data.uiType == 'Psych'){
 			scoreTxt.text = 'Score: ' + scoreComma;
-			scoreTxt.text += " | Misses: " + songMisses;
+			scoreTxt.text += " | Misses: " + missComma;
 			scoreTxt.text += " | Rating: ";
 			scoreTxt.text += ratingName;
 			if (ratingName != '?'){
@@ -1298,7 +1320,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.text = 'Score: ' + scoreComma;
 		}
 		if (ClientPrefs.data.uiType == 'Micd Up'){
-			missTxt.text = 'Misses: ' + songMisses;
+			missTxt.text = 'Misses: ' + missComma;
 			if (songMisses == 0 && ratingName != '?'){
 				missTxt.text += ' [$ratingFC]';
 			}
@@ -1308,7 +1330,11 @@ class PlayState extends MusicBeatState
 				accuracyTxt.text = "Accuracy: 0%";
 			}
 			ratingTxt.text =  'Rating: ' + ratingName;
-			comboTxt.text =  'Combo: ' + combo;
+			comboTxt.text =  'Combo: ' + comboComma;
+		}
+		if (ClientPrefs.data.uiType == 'Chainsaw'){
+			missTxt.text = 'Misses: ' + missComma;
+			comboTxt.text =  'Combo: ' + comboComma;
 		}
 
 		if (ClientPrefs.data.uiType == 'Psych' && !miss){
@@ -1879,6 +1905,14 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if (FlxG.keys.justPressed.TAB && startedCountdown && canPause)
+			{
+				var ret:Dynamic = callOnScripts('onPause', null, true);
+				if(ret != LuaUtils.Function_Stop) {
+					openDebugMenu();
+				}
+			}
+
 		if(!endingSong && !inCutscene && allowDebugKeys)
 		{
 			if (FlxG.keys.justPressed.SEVEN)
@@ -2100,6 +2134,34 @@ class PlayState extends MusicBeatState
 		if(autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 	}
+
+	function openDebugMenu()
+		{
+			FlxG.camera.followLerp = 0;
+			persistentUpdate = false;
+			persistentDraw = true;
+			paused = true;
+	
+			if(FlxG.sound.music != null) {
+				FlxG.sound.music.pause();
+				vocals.pause();
+				opponentVocals.pause();
+			}
+			if(!cpuControlled)
+			{
+				for (note in playerStrums)
+					if(note.animation.curAnim != null && note.animation.curAnim.name != 'static')
+					{
+						note.playAnim('static');
+						note.resetAnim = 0;
+					}
+			}
+			openSubState(new substates.DebugSubState());
+	
+			#if DISCORD_ALLOWED
+			if(autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			#end
+		}
 
 	function openChartEditor()
 	{
@@ -2610,7 +2672,14 @@ class PlayState extends MusicBeatState
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
-				MusicBeatState.switchState(new FreeplayState());
+				states.Results.epicscore = songScore;
+				states.Results.epicmiss = songMisses;
+				states.Results.epicpercent = CoolUtil.floorDecimal(ratingPercent * 100, 2);
+				states.Results.epicRating = ratingName;
+				states.Results.epiccombo = combo;
+				states.Results.epichighcombo = highestCombo;
+				states.Results.epichits = songHits;
+				MusicBeatState.switchState(new states.Results());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
@@ -3205,6 +3274,9 @@ class PlayState extends MusicBeatState
 		if (!note.isSustainNote)
 		{
 			combo++;
+			if (combo > highestCombo){
+				highestCombo++;
+			}
 			if(combo > 9999) combo = 9999;
 			popUpScore(note);
 		}
